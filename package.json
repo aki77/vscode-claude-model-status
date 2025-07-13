@@ -1,23 +1,45 @@
 {
   "name": "claude-model-status",
   "displayName": "Claude Model Status",
-  "description": "",
-  "version": "0.0.1",
+  "description": "Displays the currently used Claude Code model name in the status bar.",
+  "version": "0.1.0",
+  "publisher": "aki77",
+  "license": "MIT",
   "engines": {
     "vscode": "^1.102.0"
   },
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aki77/vscode-claude-model-status.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aki77/vscode-claude-model-status/issues"
+  },
+  "activationEvents": [
+    "onStartupFinished"
+  ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "claude-model-status.helloWorld",
-        "title": "Hello World"
+        "command": "claude-model-status.refresh",
+        "title": "Refresh Claude Model Status"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "Claude Model Status",
+      "properties": {
+        "claude-model-status.updateInterval": {
+          "type": "number",
+          "default": 1000,
+          "description": "Update interval in milliseconds",
+          "minimum": 500
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "pnpm run package",
@@ -31,7 +53,8 @@
     "pretest": "pnpm run compile-tests && pnpm run compile && pnpm run lint",
     "check-types": "tsc --noEmit",
     "lint": "eslint src",
-    "test": "vscode-test"
+    "test": "vscode-test",
+    "publish": "pnpm vsce publish --no-dependencies"
   },
   "devDependencies": {
     "@types/vscode": "^1.102.0",

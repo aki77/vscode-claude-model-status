@@ -1,71 +1,72 @@
-# claude-model-status README
+# Claude Model Status
 
-This is the README for your extension "claude-model-status". After writing up a brief description, we recommend including the following sections.
+A VSCode extension that displays the currently used Claude Code model name in the status bar.
+
+![Demo](https://i.gyazo.com/0d94a350c7a8ee429f76a3393d082218.png)
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- **Real-time Model Display**: Shows the Claude model name currently in use for the workspace in the status bar
+- **Latest Log Based**: Displays the model from the last executed Claude prompt  within the same project
+- **Auto Update**: Monitors log file changes and automatically updates the status
+- **Manual Refresh**: Click the status bar item to manually update
+- **Fallback Function**: Retrieves from `~/.claude/settings.json` when detection from logs fails
 
-For example if there is an image subfolder under your extension project workspace:
+### Display Examples
 
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+The status bar displays as follows:
+- `⚡ Sonnet 4` - When using Claude Sonnet 4
+- `⚡ Opus 4` - When using Claude Opus 4
+- `⚡ Haiku 3` - When using Claude Haiku 3
+- `Claude: Not detected` - When no model is detected
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+- **Claude Code**: Installed Claude Code CLI
+- **VSCode**: Visual Studio Code 1.102.0 or higher
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+This extension provides the following settings:
 
-For example:
+- `claude-model-status.updateInterval`: Auto-update interval (milliseconds)
+  - Default: `1000` (1 second)
+  - Minimum: `500` (0.5 seconds)
 
-This extension contributes the following settings:
+To change settings, open VSCode settings (`Cmd+,` / `Ctrl+,`) and search for "claude model status".
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+## Usage
+
+### After Installation
+
+1. Open a Claude Code project in VSCode
+2. The current model name will automatically appear in the status bar (bottom right)
+3. Click the status bar icon for manual updates when needed
+
+### How It Works
+
+1. **Log File Search**: Identifies the `~/.claude/projects/` directory corresponding to the current workspace
+2. **Model Extraction**: Extracts model information from assistant messages in the latest log files (`.jsonl`)
+3. **Fallback**: Uses the `model` field from `~/.claude/settings.json` when unavailable from logs
+4. **Display**: Shows the extracted model name in an easy-to-understand format in the status bar
+
+## Commands
+
+- `claude-model-status.refresh`: Manually update the status
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
+- Model information will not display if Claude Code is not installed
+- When the project directory has no corresponding directory in `~/.claude/projects/`, fallback settings are used
 
 ---
 
-## Following extension guidelines
+## License
 
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
+This project is published under the MIT License.
 
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
+## Contributing
 
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
+Please report bugs and feature requests through GitHub Issues.
 
 **Enjoy!**

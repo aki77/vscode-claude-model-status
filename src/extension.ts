@@ -1,26 +1,37 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import { StatusBarManager } from './statusBarManager';
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
+let statusBarManager: StatusBarManager;
+
 export function activate(context: vscode.ExtensionContext) {
+	console.log('Claude Model Status extension is now active!');
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "claude-model-status" is now active!');
+	// Debug output workspace information
+	const workspaceFolders = vscode.workspace.workspaceFolders;
+	console.log('Workspace folders:', workspaceFolders?.map(f => f.uri.fsPath));
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	const disposable = vscode.commands.registerCommand('claude-model-status.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from Claude Model Status!');
+	// Initialize status bar manager
+	statusBarManager = new StatusBarManager();
+
+	// Register manual refresh command
+	const refreshCommand = vscode.commands.registerCommand('claude-model-status.refresh', async () => {
+		await statusBarManager.refresh();
 	});
 
-	context.subscriptions.push(disposable);
+	// Start auto-update
+	statusBarManager.startAutoUpdate();
+
+	// Register cleanup for when extension is deactivated
+	context.subscriptions.push(
+		refreshCommand,
+		statusBarManager
+	);
+
+	console.log('Claude Model Status: Setup completed');
 }
 
-// This method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() {
+	if (statusBarManager) {
+		statusBarManager.dispose();
+	}
+}
