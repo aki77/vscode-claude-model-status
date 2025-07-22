@@ -6,7 +6,6 @@ export class StatusBarManager {
     private statusBarItem: vscode.StatusBarItem;
     private logAnalyzer: ClaudeLogAnalyzer;
     private projectDetector: ProjectDetector;
-    private updateTimer: NodeJS.Timeout | undefined;
     private fileWatcher: vscode.FileSystemWatcher | undefined;
 
     constructor() {
@@ -58,35 +57,6 @@ export class StatusBarManager {
         }
     }
 
-    /**
-     * Start auto-update
-     */
-    public startAutoUpdate(): void {
-        // Get update interval from settings
-        const config = vscode.workspace.getConfiguration('claude-model-status');
-        const updateInterval = config.get<number>('updateInterval', 1000);
-
-        // Clear existing timer if present
-        this.stopAutoUpdate();
-
-        // Initial update
-        this.updateStatus();
-
-        // Start periodic updates
-        this.updateTimer = setInterval(() => {
-            this.updateStatus();
-        }, updateInterval);
-    }
-
-    /**
-     * Stop auto-update
-     */
-    public stopAutoUpdate(): void {
-        if (this.updateTimer) {
-            clearInterval(this.updateTimer);
-            this.updateTimer = undefined;
-        }
-    }
 
     /**
      * Manually update status (when command is executed)
@@ -154,7 +124,6 @@ export class StatusBarManager {
      * Clean up resources
      */
     public dispose(): void {
-        this.stopAutoUpdate();
         if (this.fileWatcher) {
             this.fileWatcher.dispose();
         }

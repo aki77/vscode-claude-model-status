@@ -18,8 +18,8 @@ export function activate(context: vscode.ExtensionContext) {
 		await statusBarManager.refresh();
 	});
 
-	// Start auto-update
-	statusBarManager.startAutoUpdate();
+	// Initial status update
+	statusBarManager.updateStatus();
 
 	// Register cleanup for when extension is deactivated
 	context.subscriptions.push(

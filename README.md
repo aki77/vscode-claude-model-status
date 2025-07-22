@@ -27,13 +27,7 @@ The status bar displays as follows:
 
 ## Extension Settings
 
-This extension provides the following settings:
-
-- `claude-model-status.updateInterval`: Auto-update interval (milliseconds)
-  - Default: `1000` (1 second)
-  - Minimum: `500` (0.5 seconds)
-
-To change settings, open VSCode settings (`Cmd+,` / `Ctrl+,`) and search for "claude model status".
+This extension automatically monitors Claude model status using file system watching and doesn't require any configuration.
 
 ## Usage
 

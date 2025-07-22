@@ -31,14 +31,7 @@
     ],
     "configuration": {
       "title": "Claude Model Status",
-      "properties": {
-        "claude-model-status.updateInterval": {
-          "type": "number",
-          "default": 1000,
-          "description": "Update interval in milliseconds",
-          "minimum": 500
-        }
-      }
+      "properties": {}
     }
   },
   "scripts": {
