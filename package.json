@@ -2,7 +2,7 @@
   "name": "claude-model-status",
   "displayName": "Claude Model Status",
   "description": "Displays the currently used Claude Code model name in the status bar.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "publisher": "aki77",
   "license": "MIT",
   "engines": {
